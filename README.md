@@ -1,54 +1,38 @@
-# NGINX Template Repository
+# Messenger
 
-## How do I use this template?
+This is the backend for the messaging app for the NGINX Microservices March Demo Architecture
 
-**DO NOT FORK** -- this template is meant to be used from the **[`Use this template`](https://github.com/nginxinc/template-repository/generate)** feature.
+## Responsibility
 
-1. Click on **[`Use this template`](https://github.com/nginxinc/template-repository/generate)**
-2. Give a name to your project
-3. Wait until the first run of CI finishes (Github Actions will process the template and commit to your new repo)
-4. Clone your new project and happy coding!
+Drive the messaging service and store messages
 
-**NOTE**: **WAIT** until the first CI run on GitHub Actions before cloning your new project.
+## Getting started
 
-## What is included on this template?
+1. Run `docker-compose up` to start the postgres database
+1. Create the db: `PGDATABASE=postgres node bin/create-db.mjs`
+1. Create the tables `node bin/create-schema.mjs`
+1. Supply seed data `node bin/create-seed-data.mjs`
+1. Run `node index.mjs` to start the service
 
-This template includes all the scaffolding you need to get started on a standards compliant NGINX repository:
+## Using the Service
 
-* Issue and PR templates
-* Contributing guidelines
-* Support guidelines
-* Security guidelines for reporting major vulnerabilities
-* Standard `.gitignore` with minimal defaults
-* NGINX Code of Conduct
-* Standard license for NGINX OSS projects
-* Changelog placeholder
-* Codeowners placeholder
+1. Create a conversation: `curl -d '{"participant_ids": [1, 2]}' -H "Content-Type: application/json" -X POST http://localhost:8080/conversations`
+1. Send a message to the conversation from user 1: `curl -d '{"content": "This is the first message", "user_id": 1}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
+1. Send another message from the other user: `curl -d '{"content": "This is the second message", "user_id": 2}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
+1. Fetch the messages: `curl -X GET http://localhost:8080/conversations/1/message`
+1. Set the "view horizon" for the first user: `curl -i -d '{"index": 2, "user_id": 1}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/view_horizon'`
 
----
+## A note on code and style
 
-<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -->
+The code for this example is written in a style that not in line with application development best practices.
 
-# messenger
+Instead, it is optimized to be quickly understood by those seeking to understand the Microservices March Demo Architecture without assuming special familiarity with:
 
-## Requirements
+- Javascript
+- NodeJS
+- Express
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam elit turpis, varius et arcu elementum, viverra rhoncus sem. Aliquam nec sodales magna, et egestas enim. Mauris lobortis ultrices euismod. Pellentesque in arcu lacus. Mauris cursus laoreet nulla, ac vehicula est. Vestibulum eu mauris quis lorem consectetur aliquam ac nec quam. Vestibulum commodo pharetra mi, at bibendum neque faucibus ut. Mauris et tortor sed sem consectetur eleifend ut non magna. Praesent feugiat placerat nibh, varius viverra orci bibendum sed. Vestibulum dapibus ex ut pulvinar facilisis. Quisque sodales enim et augue tempor mattis. Suspendisse finibus congue felis, ac blandit ligula. Praesent condimentum ultrices odio quis semper. Nunc ultrices, nibh quis mattis pellentesque, elit nulla bibendum felis, quis dapibus erat turpis ac urna.
+Therefore, we've opted to:
 
-## Installation
-
-Duis sit amet sapien vel velit ornare vulputate. Nulla rutrum euismod risus ac efficitur. Curabitur in sagittis elit, a semper leo. Suspendisse malesuada aliquam velit, eu suscipit lorem vehicula at. Proin turpis lacus, semper in placerat in, accumsan non ipsum. Cras euismod, elit eget pretium laoreet, tortor nulla finibus tortor, nec hendrerit elit turpis ut eros. Quisque congue nisi id mauris molestie, eu condimentum dolor rutrum. Nullam eleifend elit ac lobortis tristique. Pellentesque nec tellus non mauris aliquet commodo a eu elit. Ut at feugiat metus, at tristique mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-
-## Usage
-
-Maecenas at vehicula justo. Suspendisse posuere elementum elit vel posuere. Etiam quis pulvinar massa. Integer tempor semper risus, vitae maximus eros ullamcorper vitae. In egestas, ex vitae gravida sodales, ipsum dolor varius est, et cursus lorem dui a mi. Morbi faucibus ut nisi id faucibus. Sed quis ullamcorper ex. In et dolor id nunc interdum suscipit.
-
-## Development
-
-Read the [`CONTRIBUTING.md`](https://github.com/microservices-march-2022/messenger/blob/main/CONTRIBUTING.md) file.
-
-## License
-
-[Apache License, Version 2.0](https://github.com/microservices-march-2022/messenger/blob/main/LICENSE)
-
-&copy; [F5 Networks, Inc.](https://www.f5.com/) 2022
+- Avoid frameworks that have domain specific languages (ie, database libraries)
+- Avoid splitting up code into many different files
