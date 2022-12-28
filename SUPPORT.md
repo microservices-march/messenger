@@ -4,7 +4,7 @@
 
 We use GitHub for tracking bugs and feature requests related to this project.
 
-Don't know how something in the {{REPOSITORY_NAME}} works? Curious if the {{REPOSITORY_NAME}} can achieve your desired functionality? Please open an Issue on GitHub with the label `question`.
+Don't know how something in the messenger works? Curious if the messenger can achieve your desired functionality? Please open an Issue on GitHub with the label `question`.
 
 ## NGINX Specific Questions and/or Issues
 
