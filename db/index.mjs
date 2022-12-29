@@ -1,5 +1,5 @@
-import pkg from "pg";
-const { Pool } = pkg;
+import pg from "pg";
+const { Pool } = pg;
 
 // Configuration for the pool is pulled from
 // environment variables automatically.

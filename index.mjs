@@ -1,17 +1,14 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import express, { query as expressQuery } from "express";
+import express from "express";
 import Router from "express-promise-router";
 const router = Router();
 const app = express();
-import { query, runInTransaction } from "./db/index.mjs";
 const port = process.env.PORT || 8080;
 
-main()
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
+import { query, runInTransaction } from "./db/index.mjs";
+import { dispatchEvent, NewMessageEvent } from "./events/index.mjs";
 
-async function main() {}
 app.use(express.json());
 app.use(router);
 
@@ -111,6 +108,14 @@ router.post("/conversations/:conversationId/messages", async (req, res) => {
       } = await client.query(
         "INSERT INTO messages(content, user_id, channel_id, index) VALUES($1, $2, $3, $4) RETURNING id, inserted_at",
         [content, userId, conversationId, nextIndex]
+      );
+
+      await dispatchEvent(
+        new NewMessageEvent({
+          conversationId,
+          userId,
+          index: nextIndex,
+        })
       );
 
       res.status(201);

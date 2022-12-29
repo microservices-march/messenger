@@ -1,11 +1,30 @@
 {
-  "dependencies": {
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-promise-router": "^4.1.1",
-    "pg": "^8.8.0"
-  },
-  "devDependencies": {
-    "prettier": "^2.8.1"
-  }
+    "name": "messenger",
+    "description": "This is the backend for the messaging app for the NGINX Microservices March Demo Architecture",
+    "version": "0.0.1",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/microservices-march-2022/messenger.git"
+    },
+    "keywords": [],
+    "dependencies": {
+        "amqplib": "^0.10.3",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "express-promise-router": "^4.1.1",
+        "pg": "^8.8.0"
+    },
+    "devDependencies": {
+        "prettier": "^2.8.1"
+    },
+    "author": "Javier Evans",
+    "license": "apache-2.0",
+    "bugs": {
+        "url": "https://github.com/microservices-march-2022/messenger/issues"
+    },
+    "homepage": "https://github.com/microservices-march-2022/messenger#readme"
 }

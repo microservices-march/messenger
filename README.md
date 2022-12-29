@@ -4,7 +4,10 @@ This is the backend for the messaging app for the NGINX Microservices March Demo
 
 ## Responsibility
 
-Drive the messaging service and store messages
+Creating conversations, saving and storing messages. Providing access to messages and conversations.
+
+This service notifies the system at large when a message is sent but does not
+take any action on message send other than saving the message.
 
 ## Getting started
 
@@ -12,6 +15,7 @@ Drive the messaging service and store messages
 1. Create the db: `PGDATABASE=postgres node bin/create-db.mjs`
 1. Create the tables `node bin/create-schema.mjs`
 1. Supply seed data `node bin/create-seed-data.mjs`
+1. Make your `.env` file. `cp .env.sample .env`
 1. Run `node index.mjs` to start the service
 
 ## Using the Service
@@ -21,6 +25,19 @@ Drive the messaging service and store messages
 1. Send another message from the other user: `curl -d '{"content": "This is the second message", "user_id": 2}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
 1. Fetch the messages: `curl -X GET http://localhost:8080/conversations/1/message`
 1. Set the "view horizon" for the first user: `curl -i -d '{"index": 2, "user_id": 1}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/view_horizon'`
+
+## Application Notes
+This application serves as a simple example of a service handling messages that are durably stored.  However, it intentionally does not do a few things for the sake of simplicity:
+
+* No effort has been made to be sure that administrators cannot view messages
+* Pagination is not implemented on any endpoints
+* Message storage is being done in a simple relational database.  No design has been done to handle fast retrieval of newer messages and other performance concerns.
+* The message insertion SQL has not been optimized to handle high write volumes
+
+### View Horizon
+The application assigns a monotonically increasing `index` to each message within a conversation. This index is used to determine whether a member of a conversation has seen a message or not.  In the `users_channels` table, we store the index of the last message the user has seen in that conversation.
+
+Any messages with an index higher than than index are said not to have been seen by the user.
 
 ## A note on code and style
 
