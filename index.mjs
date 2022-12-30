@@ -32,6 +32,9 @@ router.post(
   createMessageInConversation
 );
 router.post("/conversations/:conversationId/view_horizon", setViewHorizon);
+router.get("/health", (_req, res) => {
+  res.sendStatus(200);
+});
 
 /* =================
    ROUTE HANDLERS
