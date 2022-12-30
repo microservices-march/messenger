@@ -4,7 +4,8 @@
     "version": "0.0.1",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "refresh-db": "PGDATABASE=postgres node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs"
     },
     "repository": {
         "type": "git",
@@ -13,13 +14,15 @@
     "keywords": [],
     "dependencies": {
         "amqplib": "^0.10.3",
+        "cors": "^2.8.5",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "express-promise-router": "^4.1.1",
         "pg": "^8.8.0"
     },
     "devDependencies": {
-        "prettier": "^2.8.1"
+        "prettier": "^2.8.1",
+        "swagger-editor": "^2.10.5"
     },
     "author": "Javier Evans",
     "license": "apache-2.0",

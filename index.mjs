@@ -2,23 +2,80 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import Router from "express-promise-router";
+import cors from "cors";
+
+/* =================
+   SERVER SETUP
+================== */
 const router = Router();
 const app = express();
 const port = process.env.PORT || 8080;
 
 import { query, runInTransaction } from "./db/index.mjs";
 import { dispatchEvent, NewMessageEvent } from "./events/index.mjs";
-
+console.log("this is cors ", cors);
+app.use(cors());
 app.use(express.json());
 app.use(router);
 
-router.get("/conversations", async (req, res) => {
-  const { rows } = await query("SELECT * FROM channels LIMIT 100", []);
-  res.send(JSON.stringify(rows));
-});
+/* ======
+   ROUTES
+========*/
+router.get("/conversations", getConversations);
+router.post("/conversations", createConversation);
+router.get(
+  "/conversations/:conversationId/messages",
+  getMessagesInConversation
+);
+router.post(
+  "/conversations/:conversationId/messages",
+  createMessageInConversation
+);
+router.post("/conversations/:conversationId/view_horizon", setViewHorizon);
+
+/* =================
+   ROUTE HANDLERS
+================== */
+async function getConversations(req, res) {
+  const currentUserId = 1;
+  const { rows: conversations } = await query(
+    `
+    SELECT c.id, c.inserted_at
+      FROM channels c
+      JOIN users_channels uc ON c.id = uc.channel_id AND uc.user_id = $1
+    LIMIT 100;
+    `,
+    [currentUserId]
+  );
+
+  const channelIds = conversations.map((c) => c.id);
+
+  const { rows: usersInChannel } = await query(
+    `
+    SELECT uc.channel_id as id, ARRAY_AGG(u.name) as participants FROM users_channels uc
+      JOIN users u ON u.id = uc.user_id
+      WHERE uc.channel_id = ANY($1) AND uc.user_id <> $2
+      GROUP BY uc.channel_id
+      LIMIT 100;
+  `,
+    [channelIds, currentUserId]
+  );
+
+  const channelNamesById = usersInChannel.reduce((acc, channel) => {
+    acc[channel.id] = channel.participants.join(",");
+    return acc;
+  }, {});
+
+  const channels = conversations.map((c) => {
+    c.name = channelNamesById[c.id];
+    return c;
+  });
+
+  res.send({ conversations: channels });
+}
 
 const PARTICIPANT_COUNT = 2;
-router.post("/conversations", async (req, res) => {
+async function createConversation(req, res) {
   const participantIds = new Set(req.body.participant_ids);
   if (participantIds.size !== PARTICIPANT_COUNT) {
     res.status(400);
@@ -36,6 +93,18 @@ router.post("/conversations", async (req, res) => {
     res.status(400);
     return res.json({
       error: `participant_ids provided did not match to two known participants`,
+    });
+  }
+
+  const { rows: matching } = await query(
+    `SELECT channel_id FROM users_channels WHERE user_id = ANY($1)`,
+    [Array.from(participantIds)]
+  );
+
+  if (matching.length >= 2) {
+    res.status(400);
+    return res.json({
+      error: `A conversation between these two users already exists with id ${matching[0].channel_id}`,
     });
   }
 
@@ -62,17 +131,22 @@ router.post("/conversations", async (req, res) => {
       inserted_at: insertedAt,
     },
   });
-});
+}
 
-router.get("/conversations/:conversationId/messages", async (req, res) => {
+async function getMessagesInConversation(req, res) {
   const { rows } = await query(
-    "SELECT * FROM messages WHERE channel_id = $1 ORDER BY index ASC",
+    `
+    SELECT m.*, u.name as username FROM messages m
+      JOIN users u on u.id = m.user_id
+    WHERE channel_id = $1
+    ORDER BY index ASC
+    `,
     [req.params.conversationId]
   );
   res.json({ messages: rows });
-});
+}
 
-router.post("/conversations/:conversationId/messages", async (req, res) => {
+async function createMessageInConversation(req, res) {
   // TODO: get user ID from cookie
   const { content, user_id: userId } = req.body;
   const { conversationId } = req.params;
@@ -118,6 +192,10 @@ router.post("/conversations/:conversationId/messages", async (req, res) => {
         })
       );
 
+      const {
+        rows: [user],
+      } = await query("SELECT name FROM users WHERE id = $1", [userId]);
+      console.log("found user name: ", user);
       res.status(201);
       res.json({
         message: {
@@ -125,6 +203,7 @@ router.post("/conversations/:conversationId/messages", async (req, res) => {
           content,
           index: nextIndex,
           user_id: userId,
+          username: user.name,
           conversation_id: conversationId,
           inserted_at: insertedAt,
         },
@@ -146,9 +225,9 @@ router.post("/conversations/:conversationId/messages", async (req, res) => {
       throw e;
     }
   });
-});
+}
 
-router.post("/conversations/:conversationId/view_horizon", async (req, res) => {
+async function setViewHorizon(req, res) {
   const { index, user_id: userId } = req.body;
   const { conversationId } = req.params;
 
@@ -158,8 +237,11 @@ router.post("/conversations/:conversationId/view_horizon", async (req, res) => {
   );
 
   res.sendStatus(204);
-});
+}
 
+/* =================
+   SERVER START
+================== */
 app.listen(port, () => {
   console.log(`messenger_service listening on port ${port}`);
 });
