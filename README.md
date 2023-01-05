@@ -12,6 +12,7 @@ take any action on message send other than saving the message.
 ## Getting started
 
 1. Run `docker-compose up` to start the postgres database
+1. From the [platform](https://github.com/microservices-march-2022/platform) repo, also run `docker-compose up`
 1. Create the db: `PGDATABASE=postgres node bin/create-db.mjs`
 1. Create the tables `node bin/create-schema.mjs`
 1. Supply seed data `node bin/create-seed-data.mjs`
