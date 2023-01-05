@@ -39,7 +39,13 @@ router.get("/health", (_req, res) => {
    ROUTE HANDLERS
 ================== */
 async function getConversations(req, res) {
-  const currentUserId = 1;
+  const currentUserId = req.header("user-id");
+  if (!currentUserId) {
+    res.status(400);
+    return res.json({
+      error: `Please specify a user id by adding the User-Id header.`,
+    });
+  }
   const { rows: conversations } = await query(
     `
     SELECT c.id, c.inserted_at
@@ -149,8 +155,16 @@ async function getMessagesInConversation(req, res) {
 }
 
 async function createMessageInConversation(req, res) {
-  // TODO: get user ID from cookie
-  const { content, user_id: userId } = req.body;
+  const { content } = req.body;
+
+  const userId = req.header("user-id");
+  if (!userId) {
+    res.status(400);
+    return res.json({
+      error: `Please specify a user id by adding the User-Id header.`,
+    });
+  }
+
   const { conversationId } = req.params;
 
   const {
@@ -230,7 +244,16 @@ async function createMessageInConversation(req, res) {
 }
 
 async function setViewHorizon(req, res) {
-  const { index, user_id: userId } = req.body;
+  const { index } = req.body;
+
+  const userId = req.header("user-id");
+  if (!userId) {
+    res.status(400);
+    return res.json({
+      error: `Please specify a user id by adding the User-Id header.`,
+    });
+  }
+
   const { conversationId } = req.params;
 
   await query(

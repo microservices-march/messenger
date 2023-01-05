@@ -36,3 +36,34 @@ export const createConversation = async (query, user_id_one, user_id_two) => {
   }
   return conversation;
 };
+
+export const createMessageInConversation = async (
+  query,
+  conversationId,
+  userId,
+  content
+) => {
+  // Don't worry about any locking here since we are just doing this in test
+  const { rows } = await query(
+    "SELECT MAX(index) as current_index FROM messages WHERE channel_id = $1",
+    [conversationId]
+  );
+  let nextIndex = 1;
+  if (rows[0].current_index !== null) {
+    nextIndex = parseInt(rows[0].current_index) + 1;
+  }
+
+  const {
+    rows: [{ id: messageId, inserted_at: insertedAt, index }],
+  } = await query(
+    "INSERT INTO messages(content, user_id, channel_id, index) VALUES($1, $2, $3, $4) RETURNING id, inserted_at, index",
+    [content, userId, conversationId, nextIndex]
+  );
+
+  return {
+    content,
+    id: messageId,
+    inserted_at: insertedAt,
+    index,
+  };
+};
