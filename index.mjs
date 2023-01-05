@@ -1,5 +1,4 @@
-import * as dotenv from "dotenv";
-dotenv.config();
+import config from "./config/config.mjs";
 import express from "express";
 import Router from "express-promise-router";
 import cors from "cors";
@@ -9,11 +8,11 @@ import cors from "cors";
 ================== */
 const router = Router();
 const app = express();
-const port = process.env.PORT || 8080;
+const port = config.get("port");
 
 import { query, runInTransaction } from "./db/index.mjs";
 import { dispatchEvent, NewMessageEvent } from "./events/index.mjs";
-console.log("this is cors ", cors);
+
 app.use(cors());
 app.use(express.json());
 app.use(router);
@@ -198,7 +197,7 @@ async function createMessageInConversation(req, res) {
       const {
         rows: [user],
       } = await query("SELECT name FROM users WHERE id = $1", [userId]);
-      console.log("found user name: ", user);
+
       res.status(201);
       res.json({
         message: {
@@ -248,3 +247,5 @@ async function setViewHorizon(req, res) {
 app.listen(port, () => {
   console.log(`messenger_service listening on port ${port}`);
 });
+
+export default app;

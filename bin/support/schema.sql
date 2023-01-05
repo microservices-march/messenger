@@ -1,6 +1,7 @@
 CREATE TABLE users (
     id bigserial PRIMARY KEY,
-    name text NOT NULL
+    name text NOT NULL,
+    inserted_at timestamp(0) without time zone  NOT NULL DEFAULT CURRENT_TIMESTAMP(0)
 );
 
 CREATE TABLE channels (

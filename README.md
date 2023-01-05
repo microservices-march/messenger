@@ -15,7 +15,6 @@ take any action on message send other than saving the message.
 1. Create the db: `PGDATABASE=postgres node bin/create-db.mjs`
 1. Create the tables `node bin/create-schema.mjs`
 1. Supply seed data `node bin/create-seed-data.mjs`
-1. Make your `.env` file. `cp .env.sample .env`
 1. Run `node index.mjs` to start the service
 
 ## Using the Service

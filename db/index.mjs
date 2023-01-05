@@ -1,3 +1,4 @@
+import config from "../config/config.mjs";
 import pg from "pg";
 const { Pool } = pg;
 
@@ -5,7 +6,13 @@ const { Pool } = pg;
 // environment variables automatically.
 // See the .env file or the container
 // environment. All vars start with 'PG'
-const pool = new Pool();
+const pool = new Pool({
+  user: config.get("pguser"),
+  host: config.get("pghost"),
+  database: config.get("pgdatabase"),
+  password: config.get("pgpassword"),
+  port: config.get("pgport"),
+});
 
 // This method not to be used with transactions that span
 // multiple statements.

@@ -1,6 +1,4 @@
-import * as dotenv from "dotenv";
 import * as fs from "fs/promises";
-dotenv.config();
 import { query } from "../db/index.mjs";
 
 async function main() {

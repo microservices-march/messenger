@@ -1,6 +1,3 @@
-import * as dotenv from "dotenv";
-dotenv.config();
-
 import seedData from "./support/seeds.mjs";
 import { query } from "../db/index.mjs";
 
