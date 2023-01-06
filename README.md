@@ -21,10 +21,10 @@ take any action on message send other than saving the message.
 ## Using the Service
 
 1. Create a conversation: `curl -d '{"participant_ids": [1, 2]}' -H "Content-Type: application/json" -X POST http://localhost:8080/conversations`
-1. Send a message to the conversation from user 1: `curl -d '{"content": "This is the first message", "user_id": 1}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
-1. Send another message from the other user: `curl -d '{"content": "This is the second message", "user_id": 2}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
-1. Fetch the messages: `curl -X GET http://localhost:8080/conversations/1/message`
-1. Set the "view horizon" for the first user: `curl -i -d '{"index": 2, "user_id": 1}' -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/view_horizon'`
+1. Send a message to the conversation from user 1: `curl -d '{"content": "This is the first message"}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
+1. Send another message from the other user: `curl -d '{"content": "This is the second message"}' -H "User-Id: 2" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'`
+1. Fetch the messages: `curl -X GET http://localhost:8080/conversations/1/messages`
+1. Set the "view horizon" for the first user: `curl -i -d '{"index": 2}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/view_horizon'`
 
 ## Application Notes
 This application serves as a simple example of a service handling messages that are durably stored.  However, it intentionally does not do a few things for the sake of simplicity:
