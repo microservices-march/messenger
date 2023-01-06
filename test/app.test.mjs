@@ -278,7 +278,7 @@ describe("messenger service API", () => {
         .send({
           index: 12,
         })
-        .expect(33);
+        .expect(204);
     });
 
     it("should set the view horizon in the db", async () => {
