@@ -4,5 +4,7 @@
     "pgpassword": "postgres",
     "pghost": "localhost",
     "pgport": 5432,
-    "pgdatabase": "messenger_test"
+    "pgdatabase": "messenger_test",
+    "amqphost": "localhost",
+    "amqpport": 5672
 }

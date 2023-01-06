@@ -1,9 +1,10 @@
+import config from "../config/config.mjs";
 import * as amqp from "amqplib";
 
 const EVENT_QUEUE_NAME = "chat_queue";
 
 async function main() {
-  const conn = await amqp.connect("amqp://guest:guest@localhost:5672");
+  const conn = await amqp.connect(`amqp://guest:guest@${config.get("amqphost")}:${config.get("amqpport")}`);
 
   const ch1 = await conn.createChannel();
   await ch1.assertQueue(EVENT_QUEUE_NAME);

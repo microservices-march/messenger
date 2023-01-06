@@ -50,6 +50,20 @@ const config = convict({
     arg: "pgpassword",
     sensitive: true,
   },
+  amqphost: {
+    doc: "host for the amqp broker",
+    format: String,
+    default: null,
+    env: "AMQPHOST",
+    arg: "amqphost",
+  },
+  amqpport: {
+    doc: "port for the amqp broker",
+    format: "port",
+    default: null,
+    env: "AMQPPORT",
+    arg: "amqpport",
+  }
 });
 
 const env = config.get("env");
