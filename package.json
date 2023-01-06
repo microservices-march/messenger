@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "main": "index.js",
     "scripts": {
-        "test": "NODE_ENV=test mocha",
+        "test": "NODE_ENV=test mocha --exit",
         "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=messenger_dev node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs",
         "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=messenger_test node bin/create-db.mjs && NODE_ENV=test node bin/create-schema.mjs"
     },

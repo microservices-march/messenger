@@ -1,0 +1,41 @@
+name: Run tests
+on: [push]
+
+jobs:
+    api-test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [19.3.0]
+        services:
+            postgres:
+                image: postgres:15-alpine
+                env:
+                    PGUSER: postgres
+                    PGPASSWORD: postgres
+                    PGDATABASE: messenger_test
+                ports:
+                    - 5432:5432
+                options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+            rabbitmq:
+                image: rabbitmq:3.11.4-management-alpine
+                ports:
+                    - 5672:5672
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install Dependencies
+              run: npm install
+              
+            - name: Prepare database
+              run: npm run refresh-db-test
+
+            - name: API testing
+              run: npm test
+              env:
+                  NODE_ENV: test
