@@ -10,8 +10,8 @@ CREATE TABLE channels (
 );
 
 CREATE TABLE users_channels (
-    channel_id bigserial REFERENCES channels(id) ON DELETE CASCADE NOT NULL,
-    user_id bigserial REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+    channel_id bigint REFERENCES channels(id) ON DELETE CASCADE NOT NULL,
+    user_id bigint REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     last_viewed_index bigint NOT NULL DEFAULT 0,
     inserted_at timestamp(0) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP(0)
 );
