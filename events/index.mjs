@@ -14,19 +14,21 @@ async function main() {
 
 const channel = await main();
 
-export function NewMessageEvent({ conversationId, userId, index }) {
+export function NewMessageEvent({ conversationId, userId, index, participantIds }) {
   this.channelId = conversationId;
   this.userId = userId;
   this.index = index;
   this.targetQueue = EVENT_QUEUE_NAME;
+  this.type = "new_message";
 
   this.serialize = () => {
     return Buffer.from(
       JSON.stringify({
-        type: "new_message",
+        type: this.type,
         channel_id: this.channelId,
         user_id: this.userId,
         index: this.index,
+        participant_ids: participantIds
       })
     );
   };
@@ -35,5 +37,5 @@ export function NewMessageEvent({ conversationId, userId, index }) {
 }
 
 export async function dispatchEvent(event) {
-  channel.sendToQueue(event.targetQueue, event.serialize());
+  channel.sendToQueue(event.targetQueue, event.serialize(), {type: event.type});
 }

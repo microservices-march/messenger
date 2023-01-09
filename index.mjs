@@ -157,7 +157,7 @@ async function getMessagesInConversation(req, res) {
 async function createMessageInConversation(req, res) {
   const { content } = req.body;
 
-  const userId = req.header("user-id");
+  const userId = req.header("user-id") && parseInt(req.header("user-id"), 10);
   if (!userId) {
     res.status(400);
     return res.json({
@@ -165,15 +165,17 @@ async function createMessageInConversation(req, res) {
     });
   }
 
-  const { conversationId } = req.params;
+  const conversationId = parseInt(req.params.conversationId, 10);
 
   const {
-    rows: [channelMemberUser],
+    rows: channelMembers,
   } = await query(
-    "SELECT user_id FROM users_channels WHERE channel_id = $1 AND user_id = $2;",
-    [conversationId, userId]
+    "SELECT user_id FROM users_channels WHERE channel_id = $1;",
+    [conversationId]
   );
-  if (!channelMemberUser) {
+  const participantIds = channelMembers.map(member => parseInt(member.user_id, 10));
+  console.log(participantIds);
+  if (!participantIds.includes(userId)) {
     res.status(400);
     return res.json({ error: `User with id ${userId} is not in conversation` });
   }
@@ -205,6 +207,7 @@ async function createMessageInConversation(req, res) {
           conversationId,
           userId,
           index: nextIndex,
+          participantIds
         })
       );
 
