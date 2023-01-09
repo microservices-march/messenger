@@ -25,7 +25,7 @@ jobs:
               id: versions
 
             - name: Use Node.js ${{ steps.versions.outputs.nodejs }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ steps.versions.outputs.nodejs }}
 
