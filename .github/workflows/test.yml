@@ -6,51 +6,51 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-    api-test:
-        runs-on: ubuntu-latest
-        services:
-            postgres:
-                image: postgres:15-alpine
-                env:
-                    POSTGRES_USER: postgres
-                    POSTGRES_PASSWORD: postgres
-                    POSTGRES_DB: messenger_test
-                ports:
-                    - 5432:5432
-                options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-            rabbitmq:
-                image: rabbitmq:3.11.4-management-alpine
-                ports:
-                    - 5672:5672
-        steps:
-            - uses: actions/checkout@v2
-            - name: Read .tool-versions
-              uses: marocchino/tool-versions-action@v1
-              id: versions
+  api-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: messenger_test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      rabbitmq:
+        image: rabbitmq:3.11.4-management-alpine
+        ports:
+          - 5672:5672
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read .tool-versions
+        uses: marocchino/tool-versions-action@v1
+        id: versions
 
-            - name: Use Node.js ${{ steps.versions.outputs.nodejs }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ steps.versions.outputs.nodejs }}
+      - name: Use Node.js ${{ steps.versions.outputs.nodejs }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.versions.outputs.nodejs }}
 
-            - name: Install Dependencies
-              run: npm install
-              
-            - name: Prepare database
-              run: npm run refresh-db-test
+      - name: Install Dependencies
+        run: npm install
 
-            - name: API testing
-              run: npm test
-              env:
-                  NODE_ENV: test'
+      - name: Prepare database
+        run: npm run refresh-db-test
+
+      - name: API testing
+        run: npm test
+        env:
+          NODE_ENV: test'
 
   build-and-push:
     needs: api-test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+    contents: read
+    packages: write
 
     steps:
       - name: Checkout repository
