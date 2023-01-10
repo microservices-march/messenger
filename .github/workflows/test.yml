@@ -49,8 +49,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-    contents: read
-    packages: write
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout repository
