@@ -41,6 +41,8 @@ You can also install NodeJS by other means - just reference the version number i
 1. Set the "view horizon" for the first user: `curl -i -d '{"index": 2}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/view_horizon'`
 
 ## Application Notes
+The required configuration for this application can be understood by viewing the [configuration schema](/config/config.mjs)
+
 This application serves as a simple example of a service handling messages that are durably stored.  However, it intentionally does not do a few things for the sake of simplicity:
 
 * No effort has been made to be sure that administrators cannot view messages
