@@ -28,6 +28,9 @@ const sdk = new opentelemetry.NodeSDK({
     // traces
     '@opentelemetry/instrumentation-fs': {
       enabled: false
+    },
+    '@opentelemetry/instrumentation-pg': {
+      enhancedDatabaseReporting: true
     }
   })]
 });
