@@ -30,6 +30,7 @@ const sdk = new opentelemetry.NodeSDK({
       enabled: false
     },
     '@opentelemetry/instrumentation-pg': {
+      // Let's see what this does'
       enhancedDatabaseReporting: true
     }
   })]
