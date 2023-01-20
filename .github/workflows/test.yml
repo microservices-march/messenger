@@ -85,5 +85,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build_args:
-            - NODE_VERSION=${{ steps.versions.outputs.nodejs }}
+          build_args: NODE_VERSION=${{ steps.versions.outputs.nodejs }}
