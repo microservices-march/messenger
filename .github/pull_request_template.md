@@ -6,7 +6,7 @@ Describe the use case and detail of the change. If this PR addresses an issue on
 
 Before creating a PR, run through this checklist and mark each as complete.
 
-- [ ] I have read the [`CONTRIBUTING`](https://github.com/microservices-march-2022/messenger/blob/main/CONTRIBUTING.md) document
+- [ ] I have read the [`CONTRIBUTING`](https://github.com/microservices-march/messenger/blob/main/CONTRIBUTING.md) document
 - [ ] If applicable, I have added tests that prove my fix is effective or that my feature works
 - [ ] If applicable, I have checked that any relevant tests pass after adding my changes
-- [ ] I have updated any relevant documentation ([`README.md`](https://github.com/microservices-march-2022/messenger/blob/main/README.md) and [`CHANGELOG.md`](https://github.com/microservices-march-2022/messenger/blob/main/CHANGELOG.md))
+- [ ] I have updated any relevant documentation ([`README.md`](https://github.com/microservices-march/messenger/blob/main/README.md) and [`CHANGELOG.md`](https://github.com/microservices-march/messenger/blob/main/CHANGELOG.md))

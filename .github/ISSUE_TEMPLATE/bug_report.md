@@ -24,7 +24,7 @@ A clear and concise description of what you expected to happen.
 ### Your environment
 
 - Version of the messenger or specific commit
-<!-- - Version of project language -->
+- Version of NodeJS
 - Target deployment platform
 
 ### Additional context

@@ -10,11 +10,11 @@ The following is a set of guidelines for contributing to the messenger. We reall
 
 [Code Guidelines](#code-guidelines)
 
-[Code of Conduct](https://github.com/microservices-march-2022/messenger/blob/main/CODE_OF_CONDUCT.md)
+[Code of Conduct](https://github.com/microservices-march/messenger/blob/main/CODE_OF_CONDUCT.md)
 
 ## Getting Started
 
-Follow our [Installation Guide](https://github.com/microservices-march-2022/messenger/blob/main/README.md#Installation) to get the messenger up and running.
+Follow our [Installation Guide](https://github.com/microservices-march/messenger/blob/main/README.md#Installation) to get the messenger up and running.
 
 <!-- ### Project Structure (OPTIONAL) -->
 
@@ -31,7 +31,7 @@ To suggest a feature or enhancement, please create an issue on GitHub with the l
 ### Open a Pull Request
 
 * Fork the repo, create a branch, implement your changes, add any relevant tests, submit a PR when your changes are **tested** and ready for review.
-* Fill in [our pull request template](https://github.com/microservices-march-2022/messenger/blob/main/.github/pull_request_template.md).
+* Fill in [our pull request template](https://github.com/microservices-march/messenger/blob/main/.github/pull_request_template.md).
 
 Note: if you'd like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.
 
