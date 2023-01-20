@@ -4,6 +4,8 @@ on:
     branches:
       - main
   push:
+    branches:
+      - main
   workflow_dispatch:
 env:
   IMAGE_NAME: ${{ github.repository }}
