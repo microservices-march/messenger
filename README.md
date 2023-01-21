@@ -123,7 +123,7 @@ Once the messenger service is running:
 
 ## Application Notes
 
-The configuration data for this application can be seen in the [configuration schema](https://github.com/microservices-march/messenger/blob/main/config/config.mjs)
+The configuration data for this application can be seen in the [configuration schema](https://github.com/microservices-march/messenger/blob/main/config/config.mjs).
 
 This application serves as a simple example of a service handling messages that are durably stored. However, it intentionally does not do a few things for the sake of simplicity:
 
