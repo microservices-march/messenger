@@ -24,9 +24,9 @@ Follow our [Installation Guide](https://github.com/microservices-march/messenger
 
 To report a bug, open an issue on GitHub with the label `bug` using the available bug report issue template. Please ensure the bug has not already been reported. **If the bug is a potential security vulnerability, please report using our security policy.**
 
-### Suggest a Feature or Enhancement
+### Suggest an Enhancement
 
-To suggest a feature or enhancement, please create an issue on GitHub with the label `feature` or `enhancement` using the available feature request issue template. Please ensure the feature or enhancement has not already been suggested.
+To suggest an enhancement, please create an issue on GitHub with the label `enhancement` using the available feature request issue template. Please ensure the enhancement has not already been suggested.
 
 ### Open a Pull Request
 
