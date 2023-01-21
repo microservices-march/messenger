@@ -1,6 +1,6 @@
 # Messenger
 
-This is the backend for the messaging app for the NGINX Microservices March Demo Architecture
+This is the backend for the messaging app for the NGINX Microservices March Demo Architecture.
 
 ## Responsibility
 
