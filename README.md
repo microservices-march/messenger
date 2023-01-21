@@ -87,7 +87,7 @@ You can run this project on a container using `Docker` together with `Docker Com
     node bin/create-seed-data.mjs
     ```
 
-## Using the service
+## Using the Service
 
 Once the messenger service is running:
 
@@ -138,7 +138,7 @@ The application assigns a monotonically increasing `index` to each message withi
 
 Any messages with an `index` higher than than `index` are said not to have been seen by the user.
 
-### A note on code and style
+### A Note on Code and Style
 
 The code for this example is written in a style that not in line with application development best practices.
 
