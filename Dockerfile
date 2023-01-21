@@ -11,6 +11,7 @@ RUN apt-get update \
 ARG PORT=4000
 
 ENV PORT $PORT
+ENV NODE_ENV production
 
 EXPOSE $PORT
 
