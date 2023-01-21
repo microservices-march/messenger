@@ -1,3 +1,4 @@
+---
 name: Run CI/CD tests
 on:
   pull_request:
