@@ -1,6 +1,6 @@
 # Messenger
 
-This is the backend for the messaging app for the NGINX Microservices March Demo Architecture.
+This is the backend for the messaging app for the NGINX Microservices March demo architecture.
 
 ## Responsibility
 
@@ -10,13 +10,13 @@ This service notifies the system at large when a message is sent but does not ta
 
 ## Requirements
 
-This project requires either `NodeJS` or `Docker` to run.
+This project requires either `NodeJS` or `Docker` to run. Using `NodeJS` will recreate a local development environment. Using `Docker` will let you recreate a pseudo production environment.
 
 ### NodeJS
 
-This project uses `NodeJS`. The current version is specified in [`.tool-versions`](https://github.com/microservices-march/webhook-receiver/blob/main/.tool-versions). `NodeJS` is a rapidly evolving language which makes it critical to explicitly define which version is being used to avoid any potential errors due to mismatched versions.
+This project uses `NodeJS`. The current version is specified in [`.tool-versions`](https://github.com/microservices-march/messenger/blob/main/.tool-versions). `NodeJS` is a rapidly evolving language which makes it critical to explicitly define which version is being used to avoid any potential errors due to mismatched versions.
 
-We recommended that you use [asdf](https://asdf-vm.com/guide/getting-started.html) to manage your local `NodeJS` installation. Once you have `asdf` installed, you can run `asdf install` to automatically install the version of `NodeJS` specified in [`.tool-versions`](https://github.com/microservices-march/webhook-receiver/blob/main/.tool-versions).
+We recommended that you use [asdf](https://asdf-vm.com/guide/getting-started.html) to manage your local `NodeJS` installation. Once you have `asdf` installed, you can run `asdf install` to automatically install the version of `NodeJS` specified in [`.tool-versions`](https://github.com/microservices-march/messenger/blob/main/.tool-versions).
 
 <details>
 <summary>
@@ -26,7 +26,7 @@ In a microservices environment, you may have to work on projects that use differ
 
 [asdf](https://asdf-vm.com/guide/getting-started.html) is a single tool that lets you manage multiple versions of different languages in isolation and will automatically install and/or switch to the required runtime/version in any directory that has a `.tool-versions` file.
 
-This is helpful in getting closer to [Dev/prod parity](https://12factor.net/dev-prod-parity) in a microservices environment. As you can see in this project, the [GitHub action workflow](https://github.com/microservices-march/webhook-receiver/blob/main/.github/workflows/test.yml) uses the same version called out in [`.tool-versions`](https://github.com/microservices-march/webhook-receiver/blob/main/.tool-versions) to test the codebase and build a Docker image.
+This is helpful in getting closer to [dev/prod parity](https://12factor.net/dev-prod-parity) in a microservices environment. As you can see in this project, the [GitHub action workflow](https://github.com/microservices-march/messenger/blob/main/.github/workflows/test.yml) uses the same version called out in [`.tool-versions`](https://github.com/microservices-march/messenger/blob/main/.tool-versions) to test the codebase and build a Docker image.
 
 This way, if we use `asdf` we're guaranteed to be developing, testing, and releasing to a consistent version of NodeJS.
 </details>
@@ -39,31 +39,33 @@ You can run this project on a container using `Docker` together with `Docker Com
 
 ## Setup
 
+**Note:** Instructions marked as (NodeJS - Dev) are only necessary if you want to recreate a local development environment. Instructions marked as (Docker - Prod) are only necessary if you want to recreate a pseudo production environment (careful, it's not actually production ready!).
+
 1. Clone this repo:
 
     ```bash
     git clone https://github.com/microservices-march/messenger
     ```
 
-2. From the root directory of this repository, build the Docker image:
-
-    ```bash
-    docker build -t messenger .
-    ```
-
-3. Start the `messenger` service PostgreSQL database:
+2. Start the `messenger` service PostgreSQL database:
 
     ```bash
     docker-compose up -d
     ```
 
-4. Start the `messenger` service in a container:
+3. (Docker - Prod) From the root directory of this repository, build the `messenger` Docker image:
+
+    ```bash
+    docker build -t messenger .
+    ```
+
+4. (Docker - Prod) Start the `messenger` service in a container:
 
     ```bash
     docker run -d -p 8083:8083 --name messenger -e PGPASSWORD=postgres -e CREATE_DB_NAME=messenger -e PGHOST=messenger-db-1 -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=8083 --network mm_2023 messenger
     ```
 
-5. SSH into the container to set up the PostgreSQL DB:
+5. (Docker - Prod) SSH into the container to set up the PostgreSQL DB:
 
     ```bash
     docker exec -it messenger /bin/bash
@@ -85,6 +87,12 @@ You can run this project on a container using `Docker` together with `Docker Com
 
     ```bash
     node bin/create-seed-data.mjs
+    ```
+
+9. (NodeJS - Dev) Start the service:
+
+    ```bash
+    node index.mjs
     ```
 
 ## Using the Service
