@@ -6,8 +6,7 @@ This is the backend for the messaging app for the NGINX Microservices March Demo
 
 Creating conversations, saving and storing messages. Providing access to messages and conversations.
 
-This service notifies the system at large when a message is sent but does not
-take any action on message send other than saving the message.
+This service notifies the system at large when a message is sent but does not take any action on message send other than saving the message.
 
 ## Requirements
 
