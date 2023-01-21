@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-The following is a set of guidelines for contributing to the messenger. We really appreciate that you are considering contributing!
+The following is a set of guidelines for contributing to this repository. We really appreciate that you are considering contributing!
 
 #### Table Of Contents
 
@@ -14,7 +14,7 @@ The following is a set of guidelines for contributing to the messenger. We reall
 
 ## Getting Started
 
-Follow our [Installation Guide](https://github.com/microservices-march/messenger/blob/main/README.md#Installation) to get the messenger up and running.
+Follow our [Installation Guide](https://github.com/microservices-march/messenger/blob/main/README.md#Installation) to get this repository up and running.
 
 <!-- ### Project Structure (OPTIONAL) -->
 
