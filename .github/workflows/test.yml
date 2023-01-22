@@ -75,9 +75,9 @@ jobs:
       - name: Extract metadata (tags, labels) for Docker
         uses: docker/metadata-action@v4
         id: meta
+        env:
+          DOCKER_METADATA_PR_HEAD_SHA: true
         with:
-          env:
-            DOCKER_METADATA_PR_HEAD_SHA: true
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable={{ is_default_branch }}
