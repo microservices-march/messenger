@@ -81,8 +81,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable={{ is_default_branch }}
-            type=ref,event=branch,suffix={{ sha }}
-            type=ref,event=pr,suffix={{ sha }}
+            type=ref,event=branch,suffix=-{{ sha }}
+            type=ref,event=pr,prefix="pr",suffix=-{{ sha }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
