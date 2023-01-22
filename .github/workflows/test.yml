@@ -76,6 +76,8 @@ jobs:
         uses: docker/metadata-action@v4
         id: meta
         with:
+          env:
+            DOCKER_METADATA_PR_HEAD_SHA: true
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable={{ is_default_branch }}
