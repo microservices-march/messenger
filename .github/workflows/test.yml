@@ -54,7 +54,7 @@ jobs:
 
   build-and-push:
     name: Build and push Docker image
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     needs: api-test
     runs-on: ubuntu-22.04
     permissions:
@@ -79,7 +79,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ghcr.io/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
