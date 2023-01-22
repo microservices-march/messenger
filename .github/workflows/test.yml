@@ -52,15 +52,15 @@ jobs:
 
   build-and-push:
     name: Build and push Docker image
-    env:
-      IMAGE_NAME: ${{ github.repository }}
-      REGISTRY: ghcr.io
     # if: github.ref == 'refs/heads/main'
     needs: api-test
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
+    env:
+      IMAGE_NAME: ${{ github.repository }}
+      REGISTRY: ghcr.io
+    # permissions:
+    #   contents: read
+    #   packages: write
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
@@ -82,6 +82,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=raw,value=latest,enable={{ is_default_branch }}
+            type=ref,event=branch,enable={{ is_default_branch }}
             type=sha
 
       - name: Build and push Docker image
