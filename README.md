@@ -71,25 +71,31 @@ You can run this project on a container using `Docker` together with `Docker Com
     docker exec -it messenger /bin/bash
     ```
 
-6. Create the PostgreSQL DB:
+6. (NodeJS - Dev) Install NodeJS modules:
+
+    ```bash
+    npm install
+    ```
+
+7. Create the PostgreSQL DB:
 
     ```bash
     PGDATABASE=postgres node bin/create-db.mjs
     ```
 
-7. Create the PostgreSQL DB tables:
+8. Create the PostgreSQL DB tables:
 
     ```bash
     node bin/create-schema.mjs
     ```
 
-8. Create some PostgreSQL DB seed data:
+9. Create some PostgreSQL DB seed data:
 
     ```bash
     node bin/create-seed-data.mjs
     ```
 
-9. (NodeJS - Dev) Start the service:
+10. (NodeJS - Dev) Start the service:
 
     ```bash
     node index.mjs
