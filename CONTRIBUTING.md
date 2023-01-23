@@ -14,7 +14,7 @@ The following is a set of guidelines for contributing to this repository. We rea
 
 ## Getting Started
 
-Follow our [Installation Guide](https://github.com/microservices-march/messenger/blob/main/README.md#Installation) to get this repository up and running.
+Follow our [Setup Guide](https://github.com/microservices-march/messenger/blob/main/README.md#Setup) to get this repository up and running.
 
 <!-- ### Project Structure (OPTIONAL) -->
 
