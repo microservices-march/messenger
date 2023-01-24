@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-The following is a set of guidelines for contributing to the messenger. We really appreciate that you are considering contributing!
+The following is a set of guidelines for contributing to this repository. We really appreciate that you are considering contributing!
 
 #### Table Of Contents
 
@@ -10,11 +10,11 @@ The following is a set of guidelines for contributing to the messenger. We reall
 
 [Code Guidelines](#code-guidelines)
 
-[Code of Conduct](https://github.com/microservices-march-2022/messenger/blob/main/CODE_OF_CONDUCT.md)
+[Code of Conduct](https://github.com/microservices-march/messenger/blob/main/CODE_OF_CONDUCT.md)
 
 ## Getting Started
 
-Follow our [Installation Guide](https://github.com/microservices-march-2022/messenger/blob/main/README.md#Installation) to get the messenger up and running.
+Follow our [Setup Guide](https://github.com/microservices-march/messenger/blob/main/README.md#Setup) to get this repository up and running.
 
 <!-- ### Project Structure (OPTIONAL) -->
 
@@ -24,14 +24,14 @@ Follow our [Installation Guide](https://github.com/microservices-march-2022/mess
 
 To report a bug, open an issue on GitHub with the label `bug` using the available bug report issue template. Please ensure the bug has not already been reported. **If the bug is a potential security vulnerability, please report using our security policy.**
 
-### Suggest a Feature or Enhancement
+### Suggest an Enhancement
 
-To suggest a feature or enhancement, please create an issue on GitHub with the label `feature` or `enhancement` using the available feature request issue template. Please ensure the feature or enhancement has not already been suggested.
+To suggest an enhancement, please create an issue on GitHub with the label `enhancement` using the available feature request issue template. Please ensure the enhancement has not already been suggested.
 
 ### Open a Pull Request
 
 * Fork the repo, create a branch, implement your changes, add any relevant tests, submit a PR when your changes are **tested** and ready for review.
-* Fill in [our pull request template](https://github.com/microservices-march-2022/messenger/blob/main/.github/pull_request_template.md).
+* Fill in [our pull request template](https://github.com/microservices-march/messenger/blob/main/.github/pull_request_template.md).
 
 Note: if you'd like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.
 

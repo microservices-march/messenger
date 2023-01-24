@@ -1,35 +1,53 @@
 {
-    "name": "messenger",
-    "description": "This is the backend for the messaging app for the NGINX Microservices March Demo Architecture",
-    "version": "0.0.1",
-    "main": "index.js",
-    "scripts": {
-        "test": "NODE_ENV=test mocha --exit",
-        "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=messenger_dev node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs",
-        "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=messenger_test node bin/create-db.mjs && NODE_ENV=test node bin/create-schema.mjs"
+  "name": "messenger",
+  "description": "Messaging app backend for the NGINX Microservices March demo architecture",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=19.0.0"
+  },
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "NODE_ENV=test mocha --exit",
+    "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=messenger_dev node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs",
+    "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=messenger_test node bin/create-db.mjs && NODE_ENV=test node bin/create-schema.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microservices-march/messenger.git"
+  },
+  "keywords": [
+    "messenger",
+    "backend",
+    "microservices",
+    "demo",
+    "architecture"
+  ],
+  "contributors": [
+    {
+      "name": "Alessandro Fael Garcia"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/microservices-march-2022/messenger.git"
-    },
-    "keywords": [],
-    "dependencies": {
-        "amqplib": "^0.10.3",
-        "convict": "^6.2.3",
-        "cors": "^2.8.5",
-        "express": "^4.18.2",
-        "express-promise-router": "^4.1.1",
-        "pg": "^8.8.0"
-    },
-    "devDependencies": {
-        "mocha": "^10.2.0",
-        "prettier": "^2.8.1",
-        "supertest": "^6.3.3"
-    },
-    "author": "Javier Evans",
-    "license": "apache-2.0",
-    "bugs": {
-        "url": "https://github.com/microservices-march-2022/messenger/issues"
-    },
-    "homepage": "https://github.com/microservices-march-2022/messenger#readme"
+    {
+      "name": "Javier Evans"
+    }
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/microservices-march/messenger/issues"
+  },
+  "homepage": "https://github.com/microservices-march/messenger#readme",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "convict": "^6.2.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-promise-router": "^4.1.1",
+    "pg": "^8.8.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "prettier": "2.8.3",
+    "supertest": "^6.3.3"
+  }
 }

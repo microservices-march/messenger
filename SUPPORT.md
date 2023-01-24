@@ -27,7 +27,3 @@ For a comprehensive list of admin and deployment guides for all NGINX products, 
 ### Mailing List
 
 Want to get in touch with the NGINX dev team directly? Try using the relevant mailing list found at <https://mailman.nginx.org/mailman3/lists/>!
-
-## Contributing
-
-Please see the [contribution guide](CONTRIBUTING.md)

@@ -1,13 +1,17 @@
-name: Run tests
-on: [push]
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
+---
+name: Run CI/CD tests
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   api-test:
-    runs-on: ubuntu-latest
+    name: Run API tests
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:15-alpine
@@ -23,47 +27,45 @@ jobs:
         ports:
           - 5672:5672
     steps:
-      - uses: actions/checkout@v3
-      - name: Read .tool-versions
-        uses: marocchino/tool-versions-action@v1
-        id: versions
-
-      - name: Use Node.js ${{ steps.versions.outputs.nodejs }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.versions.outputs.nodejs }}
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Prepare database
-        run: npm run refresh-db-test
-
-      - name: API testing
-        run: npm test
-        env:
-          NODE_ENV: test'
-
-  build-and-push:
-    needs: api-test
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout repository
+      - name: Check out the codebase
         uses: actions/checkout@v3
 
       - name: Read .tool-versions
         uses: marocchino/tool-versions-action@v1
         id: versions
 
-      - name: Write node version to docker container
-        run: sed -i "1s/.*/FROM node:${{ steps.versions.outputs.nodejs }}-bullseye-slim/" Dockerfile
+      - name: Set up NodeJS ${{ steps.versions.outputs.nodejs }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.versions.outputs.nodejs }}
 
-      - name: Log in to the Container registry
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Prepare PostgreSQL database
+        run: npm run refresh-db-test
+
+      - name: Test API
+        run: npm test
+        env:
+          NODE_ENV: test
+
+  build-and-push:
+    name: Build and push Docker image
+    needs: api-test
+    runs-on: ubuntu-22.04
+    env:
+      IMAGE_NAME: ${{ github.repository }}
+      REGISTRY: ghcr.io
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+
+      - name: Read .tool-versions
+        uses: marocchino/tool-versions-action@v1
+        id: versions
+
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
@@ -71,10 +73,16 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
         uses: docker/metadata-action@v4
+        id: meta
+        env:
+          DOCKER_METADATA_PR_HEAD_SHA: true
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{ is_default_branch }}
+            type=ref,event=branch,suffix=-{{ sha }}
+            type=ref,event=pr,prefix=pr,suffix=-{{ sha }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -83,3 +91,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: NODE_VERSION=${{ steps.versions.outputs.nodejs }}
