@@ -1,0 +1,24 @@
+#user  nobody;
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    keepalive_timeout  65;
+    
+    upstream messenger_service {
+    {{- range service "messenger" }}
+      server {{ .Address }}:{{ .Port }};
+    {{- end }}
+      # server backup1.example.com  backup;
+    }
+    server {
+        listen       80;
+        server_name  localhost;
+        location / {
+          proxy_pass http://messenger_service;
+        }
+    }
+}

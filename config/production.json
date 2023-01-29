@@ -1,0 +1,6 @@
+{
+  "port": 4000,
+  "pguser": "postgres",
+  "pgport": 5432,
+  "pgdatabase": "messenger"
+}
