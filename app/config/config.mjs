@@ -68,7 +68,7 @@ const config = convict({
     doc: "the name by which the service will be registered in consul",
     format: String,
     default: "messenger",
-    env: "CONSULE_SERVICE_NAME",
+    env: "CONSUL_SERVICE_NAME",
     arg: "consul-service-name",
   },
   consulHost: {

@@ -12,8 +12,8 @@ http {
     {{- range service "messenger" }}
       server {{ .Address }}:{{ .Port }};
     {{- end }}
-      # server backup1.example.com  backup;
     }
+
     server {
         listen       80;
         server_name  localhost;
