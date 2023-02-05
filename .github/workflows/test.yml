@@ -40,13 +40,13 @@ jobs:
           node-version: ${{ steps.versions.outputs.nodejs }}
 
       - name: Install NPM dependencies
-        run: npm install
+        run: cd app && npm install
 
       - name: Prepare PostgreSQL database
-        run: npm run refresh-db-test
+        run: cd app && npm run refresh-db-test
 
       - name: Test API
-        run: npm test
+        run: cd app && npm test
         env:
           NODE_ENV: test
 
@@ -87,7 +87,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: app/.
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
