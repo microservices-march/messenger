@@ -3,23 +3,31 @@ import Consul from "consul";
 import config from "../config/config.mjs";
 import { v4 as uuidv4 } from 'uuid';
 
-const CONSUL_ID = uuidv4();
-const HOST = ip.address();
-const HEALTH_CHECK_URL = `http://${HOST}:${config.get("port")}/health`;
+// Connection information for the consul client
+const CONSUL_HOST = config.get("consulHost");
+const CONSUL_PORT = config.get("consulPort");
+
+// Information about our service we will need to supply to consul
+const SERVICE_HOST = ip.address();
+const SERVICE_PORT = config.get("port");
+const HEALTH_CHECK_URL = `http://${SERVICE_HOST}:${SERVICE_PORT}/health`;
+
+// Information we'll use for the consul service definition
+const CONSUL_ID = uuidv4(); // the id in consul for this instance of the app
 const CONSUL_SERVICE_NAME = config.get("consulServiceName");
 
 let consul;
-if (config.get("env") === "production") {
+if (CONSUL_SERVICE_NAME) {
   consul = new Consul({
-    host: config.get("consulHost"),
-    port: config.get("consulPort")
+    host: CONSUL_HOST,
+    port: CONSUL_PORT
   });
 }
 
 const serviceDefinition = {
   name: CONSUL_SERVICE_NAME,
-  address: HOST,
-  port: config.get("port"),
+  address: SERVICE_HOST,
+  port: SERVICE_PORT,
   id: CONSUL_ID,
   check: {
     http: HEALTH_CHECK_URL,

@@ -65,9 +65,9 @@ const config = convict({
     arg: "amqpport",
   },
   consulServiceName: {
-    doc: "the name by which the service will be registered in consul",
-    format: String,
-    default: "messenger",
+    doc: "the name by which the service will be registered in consul. If not specified, the service will not be registered",
+    format: "*",
+    default: null,
     env: "CONSUL_SERVICE_NAME",
     arg: "consul-service-name",
   },
