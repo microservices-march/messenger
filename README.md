@@ -57,13 +57,14 @@ You can run this project on a container using `Docker` together with `Docker Com
 3. (Docker - Prod) From the root directory of this repository, build the `messenger` Docker image:
 
     ```bash
+    # in ./app
     docker build -t messenger .
     ```
 
 4. (Docker - Prod) Start the `messenger` service in a container:
 
     ```bash
-    docker run -d -p 8083:8083 --name messenger -e PGPASSWORD=postgres -e CREATE_DB_NAME=messenger -e PGHOST=messenger-db-1 -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=8083 --network mm_2023 messenger
+    docker run --rm -d -p 4000:4000 --name messenger -e PGPASSWORD=postgres -e CREATE_DB_NAME=messenger -e PGHOST=messenger-db -e AMQPHOST=rabbitmq -e AMQPPORT=5672 -e PORT=4000 --network mm_2023 messenger
     ```
 
 5. (Docker - Prod) SSH into the container to set up the PostgreSQL DB:
@@ -75,30 +76,35 @@ You can run this project on a container using `Docker` together with `Docker Com
 6. (NodeJS - Dev) Install NodeJS modules:
 
     ```bash
+    # in ./app
     npm install
     ```
 
 7. Create the PostgreSQL DB:
 
     ```bash
-    PGDATABASE=postgres node bin/create-db.mjs
+    # in ./app
+    PGDATABASE=postgres node scripts/create-db.mjs
     ```
 
 8. Create the PostgreSQL DB tables:
 
     ```bash
-    node bin/create-schema.mjs
+    # in ./app
+    node scripts/create-schema.mjs
     ```
 
 9. Create some PostgreSQL DB seed data:
 
     ```bash
-    node bin/create-seed-data.mjs
+    # in ./app
+    node scripts/create-seed-data.mjs
     ```
 
 10. (NodeJS - Dev) Start the service:
 
     ```bash
+    # in ./app
     node index.mjs
     ```
 
@@ -109,31 +115,31 @@ Once the messenger service is running:
 1. Create a conversation:
 
     ```bash
-    curl -d '{"participant_ids": [1, 2]}' -H "Content-Type: application/json" -X POST http://localhost:8083/conversations
+    curl -d '{"participant_ids": [1, 2]}' -H "Content-Type: application/json" -X POST http://localhost:4000/conversations
     ```
 
 2. Send a message to the conversation from a user (user 1):
 
     ```bash
-    curl -d '{"content": "This is the first message"}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'
+    curl -d '{"content": "This is the first message"}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:4000/conversations/1/messages'
     ```
 
 3. Reply with a message from a different user (user 2):
 
     ```bash
-    curl -d '{"content": "This is the second message"}' -H "User-Id: 2" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/messages'
+    curl -d '{"content": "This is the second message"}' -H "User-Id: 2" -H "Content-Type: application/json" -X POST 'http://localhost:4000/conversations/1/messages'
     ```
 
 4. Fetch the messages:
 
     ```bash
-    curl -X GET http://localhost:8080/conversations/1/messages
+    curl -X GET http://localhost:4000/conversations/1/messages
     ```
 
 5. Set the "view horizon" for the first user:
 
     ```bash
-    curl -i -d '{"index": 2}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:8080/conversations/1/view_horizon'
+    curl -i -d '{"index": 2}' -H "User-Id: 1" -H "Content-Type: application/json" -X POST 'http://localhost:4000/conversations/1/view_horizon'
     ```
 
 ## Application Notes

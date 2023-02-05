@@ -10,8 +10,8 @@
   "scripts": {
     "start": "node index.mjs",
     "test": "NODE_ENV=test mocha --exit",
-    "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=messenger_dev node bin/create-db.mjs && node bin/create-schema.mjs && node bin/create-seed-data.mjs",
-    "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=messenger_test node bin/create-db.mjs && NODE_ENV=test node bin/create-schema.mjs"
+    "refresh-db": "PGDATABASE=postgres CREATE_DB_NAME=messenger_dev node scripts/create-db.mjs && node scripts/create-schema.mjs && node scripts/create-seed-data.mjs",
+    "refresh-db-test": "NODE_ENV=test PGDATABASE=postgres CREATE_DB_NAME=messenger_test node scripts/create-db.mjs && NODE_ENV=test node scripts/create-schema.mjs"
   },
   "repository": {
     "type": "git",
