@@ -63,7 +63,7 @@ const config = convict({
     default: null,
     env: "AMQPPORT",
     arg: "amqpport",
-  }
+  },
 });
 
 const env = config.get("env");

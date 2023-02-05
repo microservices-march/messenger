@@ -167,13 +167,13 @@ async function createMessageInConversation(req, res) {
 
   const conversationId = parseInt(req.params.conversationId, 10);
 
-  const {
-    rows: channelMembers,
-  } = await query(
+  const { rows: channelMembers } = await query(
     "SELECT user_id FROM users_channels WHERE channel_id = $1;",
     [conversationId]
   );
-  const participantIds = channelMembers.map(member => parseInt(member.user_id, 10));
+  const participantIds = channelMembers.map((member) =>
+    parseInt(member.user_id, 10)
+  );
   console.log(participantIds);
   if (!participantIds.includes(userId)) {
     res.status(400);
@@ -207,7 +207,7 @@ async function createMessageInConversation(req, res) {
           conversationId,
           userId,
           index: nextIndex,
-          participantIds
+          participantIds,
         })
       );
 
@@ -229,7 +229,7 @@ async function createMessageInConversation(req, res) {
       });
     } catch (e) {
       // https://www.postgresql.org/docs/8.2/errcodes-appendix.html
-      // 23503 	FOREIGN KEY VIOLATION 	foreign_key_violation
+      // 23503  FOREIGN KEY VIOLATION   foreign_key_violation
       if (e.code === "23503" && e.constraint === "messages_channel_id_fkey") {
         res.status(400);
         return res.json({
