@@ -85,7 +85,7 @@ jobs:
             type=ref,event=pr,prefix=pr,suffix=-{{ sha }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: app/.
           push: true
