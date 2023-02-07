@@ -6,5 +6,6 @@
   "pgport": 5432,
   "pgdatabase": "messenger_test",
   "amqphost": "localhost",
-  "amqpport": 5672
+  "amqpport": 5672,
+  "jsonBodyLimit": "100kb"
 }

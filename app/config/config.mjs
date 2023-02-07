@@ -50,6 +50,12 @@ const config = convict({
     arg: "pgpassword",
     sensitive: true,
   },
+  connectAmqp: {
+    doc: "Flag specifying whether the application should connect to amqp",
+    format: Boolean,
+    default: null,
+    env: "CONNECT_AMQP"
+  },
   amqphost: {
     doc: "host for the amqp broker",
     format: String,
@@ -63,6 +69,32 @@ const config = convict({
     default: null,
     env: "AMQPPORT",
     arg: "amqpport",
+  },
+  jsonBodyLimit: {
+    doc: `The max size (with unit included) that will be parsed by the JSON middleware.
+        Unit parsing is done by the https://www.npmjs.com/package/bytes library
+        ex: "100kb"`,
+    format: String,
+    default: null,
+    env: "JSON_BODY_LIMIT",
+  },
+  consulServiceName: {
+    doc: "the name by which the service will be registered in consul. If not specified, the service will not be registered",
+    format: "*",
+    default: null,
+    env: "CONSUL_SERVICE_NAME",
+  },
+  consulHost: {
+    doc: "The host at which the consul client may be found",
+    format: String,
+    default: "consul-client",
+    env: "CONSUL_HOST",
+  },
+  consulPort: {
+    doc: "port for the consul client",
+    format: "port",
+    default: 8500,
+    env: "CONSUL_PORT",
   },
 });
 
