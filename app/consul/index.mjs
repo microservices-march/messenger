@@ -1,7 +1,7 @@
 import ip from "ip";
 import Consul from "consul";
 import config from "../config/config.mjs";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const CONSUL_HOST = config.get("consulHost");
 const CONSUL_PORT = config.get("consulPort");
@@ -19,7 +19,7 @@ let consul;
 if (CONSUL_SERVICE_NAME) {
   consul = new Consul({
     host: CONSUL_HOST,
-    port: CONSUL_PORT
+    port: CONSUL_PORT,
   });
 }
 
@@ -31,14 +31,14 @@ const serviceDefinition = {
   check: {
     http: HEALTH_CHECK_URL,
     interval: "15s",
-    deregister_critical_service_after: '1m'
-  }
+    deregister_critical_service_after: "1m",
+  },
 };
 
 const doGracefulShutdown = async () => {
   if (!consul) return;
-  await consul.agent.service.deregister({id: CONSUL_ID});
-}
+  await consul.agent.service.deregister({ id: CONSUL_ID });
+};
 
 export const register = async () => {
   if (!consul) return;
@@ -47,4 +47,4 @@ export const register = async () => {
 
   process.on("SIGTERM", doGracefulShutdown);
   process.on("SIGINT", doGracefulShutdown);
-}
+};

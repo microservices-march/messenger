@@ -54,7 +54,7 @@ const config = convict({
     doc: "Flag specifying whether the application should connect to amqp",
     format: Boolean,
     default: null,
-    env: "CONNECT_AMQP"
+    env: "CONNECT_AMQP",
   },
   amqphost: {
     doc: "host for the amqp broker",
