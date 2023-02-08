@@ -8,6 +8,7 @@ CONSUL_CLIENT_PORT="${CONSUL_CLIENT_PORT}"
 
 docker run \
   --rm \
+  -d \
   --name messenger-lb \
   -e CONSUL_URL="${CONSUL_CLIENT_HOST}:${CONSUL_CLIENT_PORT}"  \
   -e OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318/ \
