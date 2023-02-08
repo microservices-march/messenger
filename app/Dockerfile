@@ -17,4 +17,4 @@ EXPOSE $PORT
 
 USER node
 
-CMD ["dumb-init", "node", "index.mjs"]
+CMD ["dumb-init", "node", "--import", "./tracing.mjs", "index.mjs"]

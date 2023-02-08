@@ -50,12 +50,6 @@ const config = convict({
     arg: "pgpassword",
     sensitive: true,
   },
-  connectAmqp: {
-    doc: "Flag specifying whether the application should connect to amqp",
-    format: Boolean,
-    default: null,
-    env: "CONNECT_AMQP",
-  },
   amqphost: {
     doc: "host for the amqp broker",
     format: String,

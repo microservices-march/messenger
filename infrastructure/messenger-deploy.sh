@@ -28,7 +28,6 @@ AMQPPORT=$(curl -X GET "http://${CONSUL_HOST}:${CONSUL_PORT}/v1/kv/amqp-port?raw
 
 docker run \
   --rm \
-  -d \
   -e NODE_ENV="${NODE_ENV}" \
   -e PORT="${PORT}" \
   -e JSON_BODY_LIMIT="${JSON_BODY_LIMIT}" \
@@ -43,3 +42,6 @@ docker run \
   -e CONSUL_SERVICE_NAME="${CONSUL_SERVICE_NAME}" \
   --network mm_2023 \
   messenger
+
+
+  # CONSUL_CLIENT_HOST=consul-client CONSUL_CLIENT_PORT=8500 CONSUL_SERVER_HOST=localhost CONSUL_SERVER_PORT=8500 ./infrastructure/messenger-deploy.sh
