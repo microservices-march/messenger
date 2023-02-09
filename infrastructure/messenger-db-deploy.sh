@@ -23,6 +23,7 @@ docker run \
   -e PGPORT="${PORT}" \
   -e POSTGRES_HOST_AUTH_METHOD="md5" \
   -e PGDATA=/var/lib/postgresql/data/pgdata \
+  -e POSTGRES_INITDB_ARGS="--auth-host=md5" \
   --network mm_2023 \
   postgres:15.1
 
