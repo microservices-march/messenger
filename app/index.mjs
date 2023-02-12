@@ -174,7 +174,7 @@ async function createMessageInConversation(req, res) {
   const participantIds = channelMembers.map((member) =>
     parseInt(member.user_id, 10)
   );
-  console.log(participantIds);
+
   if (!participantIds.includes(userId)) {
     res.status(400);
     return res.json({ error: `User with id ${userId} is not in conversation` });
