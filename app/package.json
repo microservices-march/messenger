@@ -39,11 +39,14 @@
   "homepage": "https://github.com/microservices-march/messenger#readme",
   "dependencies": {
     "amqplib": "^0.10.3",
+    "consul": "^1.2.0",
     "convict": "^6.2.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-promise-router": "^4.1.1",
-    "pg": "^8.8.0"
+    "ip": "^1.1.8",
+    "pg": "^8.8.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "mocha": "^10.2.0",

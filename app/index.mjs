@@ -2,6 +2,7 @@ import config from "./config/config.mjs";
 import express from "express";
 import Router from "express-promise-router";
 import cors from "cors";
+import { register as registerConsul } from "./consul/index.mjs";
 
 /* =================
    SERVER SETUP
@@ -14,7 +15,7 @@ import { query, runInTransaction } from "./db/index.mjs";
 import { dispatchEvent, NewMessageEvent } from "./events/index.mjs";
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: config.get("jsonBodyLimit") }));
 app.use(router);
 
 /* ======
@@ -270,8 +271,9 @@ async function setViewHorizon(req, res) {
 /* =================
    SERVER START
 ================== */
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`messenger_service listening on port ${port}`);
+  registerConsul();
 });
 
 export default app;
