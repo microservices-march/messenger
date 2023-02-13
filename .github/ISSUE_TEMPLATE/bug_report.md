@@ -14,7 +14,7 @@ A clear and concise description of what the bug is.
 
 Steps to reproduce the behavior:
 
-1. Deploy messenger using
+1. Deploy this project using
 2. View output/logs/configuration on '...'
 3. See error
 
@@ -24,7 +24,7 @@ A clear and concise description of what you expected to happen.
 
 ### Your environment
 
-- Version of the messenger or specific commit
+- Version of this project or specific commit
 - Version of NodeJS
 - Target deployment platform
 

@@ -14,7 +14,7 @@ This isn't the right place to get support for NGINX specific questions, but the 
 
 We have a community [Slack](https://nginxcommunity.slack.com/)!
 
-If you are not a member click [here](https://join.slack.com/t/nginxcommunity/shared_invite/zt-1aaa22w80-~_~wSMNyPxLPLp5xunOC7w) to sign up (and let us know if the link does not seem to be working!)
+If you are not a member click [here](https://community.nginx.org/joinslack) to sign up (and let us know if the link does not seem to be working!)
 
 Once you join, check out the `#beginner-questions` and `nginx-users` channels :)
 
@@ -27,3 +27,7 @@ For a comprehensive list of admin and deployment guides for all NGINX products, 
 ### Mailing List
 
 Want to get in touch with the NGINX dev team directly? Try using the relevant mailing list found at <https://mailman.nginx.org/mailman3/lists/>!
+
+## Contributing
+
+Please see the [contributing guide](https://github.com/microservices-march/messenger/blob/main/CONTRIBUTING.md) for guidelines on how to best contribute to this project.
