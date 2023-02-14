@@ -2,6 +2,7 @@ import config from "./config/config.mjs";
 import express from "express";
 import Router from "express-promise-router";
 import cors from "cors";
+import { trace } from "@opentelemetry/api";
 
 /* =================
    SERVER SETUP
@@ -155,6 +156,8 @@ async function getMessagesInConversation(req, res) {
 }
 
 async function createMessageInConversation(req, res) {
+    const tracer = trace.getActiveSpan();
+  console.log("TRACE_ID: ", tracer.spanContext().traceId);
   const { content } = req.body;
 
   const userId = req.header("user-id") && parseInt(req.header("user-id"), 10);
