@@ -64,6 +64,14 @@ const config = convict({
     env: "AMQPPORT",
     arg: "amqpport",
   },
+  jsonBodyLimit: {
+    doc: `The max size (with unit included) that will be parsed by the JSON middleware.
+        Unit parsing is done by the https://www.npmjs.com/package/bytes library
+        ex: "100kb"`,
+    format: String,
+    default: null,
+    env: "JSON_BODY_LIMIT",
+  },
 });
 
 const env = config.get("env");
