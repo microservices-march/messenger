@@ -39,7 +39,10 @@
   "homepage": "https://github.com/microservices-march/messenger#readme",
   "dependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.36.4",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.36.0",
+    "@opentelemetry/resources": "^1.10.0",
     "@opentelemetry/sdk-node": "^0.36.0",
+    "@opentelemetry/semantic-conventions": "^1.10.0",
     "amqplib": "^0.10.3",
     "consul": "^1.2.0",
     "convict": "^6.2.3",
