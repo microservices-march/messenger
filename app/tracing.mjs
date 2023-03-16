@@ -4,6 +4,11 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
+const IGNORED_EXPRESS_SPANS = new Set([
+  "middleware - expressInit",
+  "middleware - corsMiddleware",
+]);
+
 const resource = new Resource({
   [SemanticResourceAttributes.SERVICE_NAME]: "messenger",
 });
@@ -11,7 +16,17 @@ const resource = new Resource({
 const sdk = new opentelemetry.NodeSDK({
   resource,
   traceExporter: new OTLPTraceExporter({ headers: {} }),
-  instrumentations: [getNodeAutoInstrumentations()],
+  instrumentations: [
+    getNodeAutoInstrumentations({
+      "@opentelemetry/instrumentation-express": {
+        ignoreLayers: [
+          (name) => {
+            return IGNORED_EXPRESS_SPANS.has(name);
+          },
+        ],
+      },
+    }),
+  ],
 });
 
 sdk.start();
